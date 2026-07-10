@@ -43,13 +43,20 @@ form.addEventListener('submit', async (e) => {
   // --- SWAP THIS URL for your real Formspree endpoint ---
   // Sign up free at formspree.io, create a form, copy the action URL
   // Example: https://formspree.io/f/yourFormId
-  const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+  const FORMSPREE_URL = 'http://localhost:3000/send-quote';
 
   try {
-    const res = await fetch(FORMSPREE_URL, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
+    const res = await fetch('http://localhost:3000/send-quote', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        first_name: data.get('first_name'),
+        last_name: data.get('last_name'),
+        email: data.get('email'),
+        phone: data.get('phone'),
+        service: data.get('service'),
+        message: data.get('message')
+    })
     });
 
     if (res.ok) {
